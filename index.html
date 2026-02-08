@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Premiere | Vaishnavi</title>
+    
+    <meta property="og:title" content="Happy Propose Day | The Choice">
+    <meta property="og:description" content="A cinematic dedication to my greatest strength.">
+    <meta property="og:image" content="one.jpeg">
+    <meta name="theme-color" content="#d4af37">
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400;600&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="themeSong" loop>
+        <source src="song.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="video-bg-layer">
+        <div class="noise-overlay"></div>
+        <div class="vignette-overlay"></div>
+        <video id="bgVideo" autoplay muted loop playsinline>
+            <source src="proposal_video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="cinema-ui">
+        
+        <header class="studio-header">
+            <div class="brand">TEJAS STUDIOS</div>
+            <div class="release-tag">HAPPY PROPOSE DAY</div>
+        </header>
+
+        <section class="hero-content">
+            <div class="badge-row">
+                <span class="badge">LIMITED EDITION</span>
+                <span class="badge gold-border">BASED ON TRUE EVENTS</span>
+            </div>
+            
+            <h1 class="film-title">THE CHOICE</h1>
+            <p class="film-tagline">"Business builds the future. You build the meaning."</p>
+
+            <div class="controls-row">
+                <button class="btn-play" onclick="openTheater()">
+                    <i class="fa-solid fa-play"></i> <span class="btn-txt">WATCH PREMIERE</span>
+                </button>
+                <button class="btn-icon" onclick="toggleMusic()">
+                    <i class="fa-solid fa-music" id="musicIcon"></i>
+                </button>
+            </div>
+        </section>
+
+        <section class="reviews-section">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"Her maturity is the calm in the storm."</p>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"A partnership built on absolute Trust."</p>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <p class="review-text">"Your greatest strength is Her."</p>
+            </div>
+        </section>
+    </div>
+
+    <div class="theater-modal" id="theater">
+        <div class="close-icon" onclick="closeTheater()"><i class="fa-solid fa-xmark"></i></div>
+        
+        <div class="modal-content-scroll">
+            
+            <div class="screen-wrapper">
+                <video id="mainPlayer" controls playsinline poster="one.jpeg">
+                    <source src="proposal_video.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div class="synopsis-area">
+                <h2 class="section-header">Happy Propose Day</h2>
+                <div class="gold-divider"></div>
+
+                <div class="typewriter-wrapper">
+                    <p class="narrative-text type-me">Vaishnavi, we spend our days planning for the future...</p>
+                </div>
+
+                <p class="narrative-text fade-in-text">
+                    But amidst all that noise, you became my quiet certainty. You are the <b>Maturity</b> that balances my chaos and the <b>Honesty</b> that keeps me grounded.
+                </p>
+                
+                <p class="narrative-text fade-in-text">
+                    I don't need a label to know your value. I just need you to know that while business is my ambition, <i>you are my inspiration.</i>
+                </p>
+
+                <div class="quote-box heartbeat fade-in-text">
+                    <i class="fa-solid fa-quote-left q-mark"></i>
+                    <p class="quote-main">
+                        In this vast world of billions,<br>
+                        I choose you, for you.<br>
+                        <span class="highlight">Again and again.</span>
+                    </p>
+                    <i class="fa-solid fa-quote-right q-mark right"></i>
+                </div>
+
+                <p class="narrative-text small-print fade-in-text">
+                    No pressure. No expectations. Just me, appreciating you.
+                </p>
+
+                <div class="ticket-action-area fade-in-text">
+                    <p class="prompt">Will you keep walking this path with me?</p>
+                    <div class="btn-group">
+                        <button class="btn-ticket" onclick="printTicket()">
+                            <span class="ticket-icon"><i class="fa-solid fa-ticket"></i></span>
+                            <span>ADMIT ONE: LIFETIME SEAT</span>
+                        </button>
+                        
+                        <button class="btn-text" id="dodge-link" onmouseover="dodge()">
+                            Let's Just Be Partners
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ticket-overlay" id="ticket-modal">
+        <div class="golden-ticket">
+            <div class="left-stub">
+                <span class="ticket-header">THE CHOICE</span>
+                <span class="ticket-details">PERMANENT ADMISSION</span>
+                <span class="ticket-name">GUEST: VAISHNAVI</span>
+            </div>
+            <div class="right-stub">
+                <div class="barcode"></div>
+                <span class="status">FOREVER</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
