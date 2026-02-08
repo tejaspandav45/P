@@ -95,7 +95,7 @@ function printTicket() {
 
         // Email
         setTimeout(() => {
-             const sub = encodeURIComponent(`LIFETIME SEAT BOOKED 🎟️`);
+             const sub = encodeURIComponent(`PERMANENT SEAT BOOKED 🎟️`);
              const body = encodeURIComponent(
                  `Tejas,\n\nVaishnavi has accepted the ticket.\n\n` +
                  `"Seat V1 Confirmed for Lifetime."`
@@ -118,4 +118,5 @@ function dodge() {
         duration: 0.3, 
         ease: "power2.out" 
     });
+
 }
