@@ -12,7 +12,7 @@ function openTheater() {
     mainVid.currentTime = 0;
     mainVid.play();
 
-    // AUDIO LOGIC (Start Music on Interaction)
+    // AUDIO LOGIC
     bgMusic.volume = 0.2; 
     bgMusic.play().catch(e => console.log("Audio requires interaction"));
 
@@ -22,11 +22,12 @@ function openTheater() {
     });
 
     gsap.from(".fade-in-text", {
-        y: 20, opacity: 0, stagger: 0.8, delay: 2, duration: 1
+        y: 20, opacity: 0, stagger: 0.5, delay: 2, duration: 1
     });
 
+    // UPDATED: Delay drastically reduced (from 5s to 3s) so buttons appear quickly
     gsap.from(".ticket-action-area", {
-        scale: 0.9, opacity: 0, delay: 5, duration: 1, ease: "back.out(1.7)"
+        scale: 0.9, opacity: 0, delay: 3, duration: 1, ease: "back.out(1.7)"
     });
 }
 
@@ -95,7 +96,7 @@ function printTicket() {
 
         // Email
         setTimeout(() => {
-             const sub = encodeURIComponent(`PERMANENT SEAT BOOKED 🎟️`);
+             const sub = encodeURIComponent(`LIFETIME SEAT BOOKED 🎟️`);
              const body = encodeURIComponent(
                  `Tejas,\n\nVaishnavi has accepted the ticket.\n\n` +
                  `"Seat V1 Confirmed for Lifetime."`
@@ -118,5 +119,4 @@ function dodge() {
         duration: 0.3, 
         ease: "power2.out" 
     });
-
 }

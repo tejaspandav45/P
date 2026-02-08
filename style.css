@@ -38,12 +38,13 @@ body, html {
 /* --- UI LAYER (Main Layout) --- */
 .cinema-ui {
     position: relative; z-index: 10;
-    height: 100vh; 
+    height: 100vh; /* Fallback */
+    height: 100dvh; /* Dynamic height for mobile */
     display: flex; flex-direction: column;
     justify-content: flex-end; 
     padding: 40px;
     max-width: 1400px; margin: 0 auto;
-    overflow-y: auto; /* Allows vertical scrolling if screen is too short */
+    overflow-y: auto; 
 }
 
 /* HEADER */
@@ -61,7 +62,7 @@ body, html {
     margin-bottom: 30px; 
     max-width: 900px; 
     width: 100%; 
-    margin-top: auto; /* Pushes content down */
+    margin-top: auto; 
 }
 
 .badge-row { 
@@ -77,7 +78,6 @@ body, html {
 /* Responsive Film Title */
 .film-title {
     font-family: 'Anton', sans-serif;
-    /* Scales dynamically between 3.5rem and 8rem */
     font-size: clamp(3.5rem, 12vw, 8rem); 
     line-height: 1; text-transform: uppercase;
     background: linear-gradient(to bottom, #fff, #999);
@@ -109,29 +109,21 @@ body, html {
 }
 .btn-icon:hover { background: var(--gold); color: #000; }
 
-/* REVIEWS SECTION (UPDATED: Stacked Logic) */
+/* REVIEWS SECTION */
 .reviews-section {
-    display: flex; 
-    gap: 20px; 
+    display: flex; gap: 20px; 
     border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 25px;
-    padding-bottom: 25px;
-    /* Default Desktop: Row layout */
-    flex-direction: row; 
-    flex-wrap: wrap; /* Allows wrapping on medium screens */
+    padding-top: 25px; padding-bottom: 25px;
+    flex-direction: row; flex-wrap: wrap; 
 }
-
 .review-card { 
-    flex: 1; /* Grow to fill space */
-    min-width: 250px; 
-    background: rgba(20, 20, 20, 0.4); /* Subtle backing */
-    padding: 15px;
-    border-radius: 8px;
-    border-left: 2px solid rgba(212, 175, 55, 0.3); /* Gold accent left */
+    flex: 1; min-width: 250px; 
+    background: rgba(20, 20, 20, 0.4); 
+    padding: 15px; border-radius: 8px;
+    border-left: 2px solid rgba(212, 175, 55, 0.3); 
     transition: 0.3s;
 }
 .review-card:hover { background: rgba(212, 175, 55, 0.1); }
-
 .stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 8px; }
 .review-text { font-size: 0.85rem; color: #ccc; font-style: italic; line-height: 1.5; }
 
@@ -144,9 +136,11 @@ body, html {
 .theater-modal.active { opacity: 1; pointer-events: all; }
 
 .modal-content-scroll {
-    width: 100%; max-width: 900px; height: 100%;
+    width: 100%; max-width: 1000px;
+    height: 100%; 
     overflow-y: auto; 
-    padding: 80px 40px 60px 40px;
+    /* !!! CRITICAL FIX: HUGE BOTTOM PADDING !!! */
+    padding: 80px 40px 200px 40px; 
     position: relative; 
     -webkit-overflow-scrolling: touch;
 }
@@ -167,19 +161,44 @@ body, html {
 }
 #mainPlayer { width: 100%; height: 100%; object-fit: cover; }
 
-/* MESSAGE AREA */
-.synopsis-area { max-width: 700px; margin: 0 auto; text-align: center; }
-.section-header { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); }
+/* --- SYNOPSIS AREA & SPLIT LAYOUT --- */
+.synopsis-area { max-width: 900px; margin: 0 auto; }
+.section-header { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); text-align: center; }
 .gold-divider { width: 80px; height: 2px; background: var(--gold); margin: 20px auto 40px auto; }
 
+/* Split Container */
+.split-container {
+    display: flex; align-items: center; gap: 40px; margin-bottom: 40px; text-align: left;
+}
+.text-col { flex: 1; }
+.img-col { flex: 0 0 300px; }
+
+/* Image Poster Style */
+.cinema-frame {
+    width: 100%; padding: 6px;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid var(--gold);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    transform: rotate(2deg);
+    transition: all 0.5s ease;
+    position: relative;
+}
+.cinema-frame::before {
+    content: ''; position: absolute; inset: 3px; 
+    border: 1px solid rgba(212, 175, 55, 0.3); pointer-events: none;
+}
+.cinema-frame:hover { transform: rotate(0deg) scale(1.02); box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15); }
+.cinema-frame img { width: 100%; display: block; opacity: 0.9; }
+
+/* Text Styles */
 .narrative-text {
-    font-size: 1.1rem; line-height: 1.8; color: #ddd; margin-bottom: 30px;
+    font-size: 1.05rem; line-height: 1.8; color: #ddd; margin-bottom: 25px;
     font-weight: 300;
 }
 .narrative-text b { color: #fff; font-weight: 600; }
 .narrative-text i { color: var(--gold); }
 
-/* ANIMATIONS */
+/* Typewriter */
 .typewriter-wrapper { display: inline-block; max-width: 100%; overflow: hidden; margin-bottom: 20px; }
 .type-me {
     white-space: nowrap; border-right: 2px solid var(--gold);
@@ -189,14 +208,16 @@ body, html {
 @keyframes typing { from { width: 0 } to { width: 100% } }
 @keyframes blink { from, to { border-color: transparent } 50% { border-color: var(--gold); } }
 
+/* Bottom Section */
+.bottom-section { text-align: center; max-width: 700px; margin: 0 auto; padding-bottom: 50px; }
+
 .quote-box {
     background: linear-gradient(135deg, rgba(20, 20, 20, 0.8), rgba(212, 175, 55, 0.05));
-    padding: 40px; margin: 50px 0;
+    padding: 40px; margin: 30px 0;
     border: 1px solid var(--gold); border-radius: 4px;
     position: relative;
 }
 .heartbeat { animation: heartBeat 3s infinite ease-in-out; }
-
 @keyframes heartBeat {
     0% { transform: scale(1); border-color: rgba(212, 175, 55, 0.3); }
     50% { transform: scale(1.02); border-color: rgba(212, 175, 55, 0.8); box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); }
@@ -212,12 +233,17 @@ body, html {
 .small-print { font-size: 0.9rem; opacity: 0.6; font-style: italic; margin-bottom: 50px; }
 
 /* ACTION AREA */
-.ticket-action-area { padding-top: 40px; border-top: 1px solid #333; }
+.ticket-action-area { 
+    padding-top: 40px; 
+    border-top: 1px solid #333; 
+    opacity: 1; /* Default visible to prevent disappearing acts if js fails */
+}
 .prompt { font-size: 1rem; margin-bottom: 25px; opacity: 0.8; letter-spacing: 1px; }
 
 .btn-group { 
     display: flex; flex-direction: column; gap: 20px; 
     align-items: center; width: 100%; 
+    padding-bottom: 50px; /* Extra padding for the last button */
 }
 .btn-ticket {
     background: var(--gold); color: #000; padding: 20px 50px;
@@ -228,10 +254,10 @@ body, html {
     box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
 }
 .btn-ticket:hover { transform: scale(1.05); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5); }
-
 .btn-text {
     background: none; border: none; color: #666; font-size: 0.9rem;
-    cursor: pointer; text-decoration: underline; padding: 10px;
+    cursor: pointer; text-decoration: underline; padding: 15px;
+    margin-bottom: 20px; /* Fix for last button clipping */
 }
 
 /* --- TICKET OVERLAY --- */
@@ -244,11 +270,9 @@ body, html {
     width: 100%; max-width: 700px; background: #fff; color: #000;
     display: flex; transform: scale(0.8);
     box-shadow: 0 0 50px rgba(0,0,0,1);
-    /* Default Desktop Ticket: Horizontal */
     flex-direction: row; height: 250px; 
     border-radius: 15px; overflow: hidden;
 }
-
 .left-stub {
     flex: 2; padding: 40px; display: flex; flex-direction: column; justify-content: center;
     border-right: 2px dashed #999; text-align: left;
@@ -265,115 +289,33 @@ body, html {
 
 
 /* =========================================
-   📱 MOBILE RESPONSIVENESS (Max Width 768px)
+   📱 MOBILE RESPONSIVENESS
    ========================================= */
 @media (max-width: 768px) {
-    /* Main Layout */
-    .cinema-ui { 
-        padding: 20px; 
-        padding-bottom: 80px; /* Space for scrolling */
-        height: auto; 
-        min-height: 100vh;
-        justify-content: flex-end; 
-    } 
-    
-    /* Header */
-    .studio-header { 
-        top: 20px; left: 20px; right: 20px; 
-        font-size: 0.65rem; 
-    }
-    
-    /* Hero Content */
+    .cinema-ui { padding: 20px; justify-content: flex-end; } 
+    .studio-header { top: 20px; left: 20px; right: 20px; font-size: 0.65rem; }
     .hero-content { margin-bottom: 30px; margin-top: 100px; }
-    
-    /* Title Scaling */
     .film-title { margin-bottom: 10px; } 
-    .film-tagline { margin-bottom: 25px; border-left-width: 2px; padding-left: 10px; }
-    .badge-row { margin-bottom: 15px; }
-    
-    /* Buttons */
-    .btn-play { padding: 14px 25px; font-size: 0.9rem; }
-    .btn-icon { width: 45px; height: 45px; }
+    .reviews-section { flex-direction: column; gap: 15px; }
+    .review-card { width: 100%; background: rgba(30, 30, 30, 0.7); }
 
-    /* REVIEWS: VERTICAL STACK ON MOBILE */
-    .reviews-section {
-        flex-direction: column; /* Stack vertically */
-        align-items: stretch;   /* Full width */
-        overflow-x: visible;    /* Disable scroll */
-        gap: 15px;
-    }
-    .review-card {
-        width: 100%;
-        min-width: 0;
-        background: rgba(30, 30, 30, 0.7); /* Slightly darker for contrast */
-    }
+    /* Split Stack */
+    .split-container { flex-direction: column; text-align: center; gap: 30px; }
+    .img-col { order: -1; flex: auto; width: 80%; max-width: 280px; margin: 0 auto; }
+    .typewriter-wrapper { white-space: normal; width: 100%; text-align: center; }
+    .type-me { white-space: normal; border-right: none; animation: none; width: auto; opacity: 1; font-family: 'Cinzel'; }
 
-    /* Modal Adjustments */
+    /* Modal Scroll Fixes */
     .modal-content-scroll { 
-        padding: 70px 20px 40px 20px; 
+        padding: 70px 20px 250px 20px; /* EXTRA PADDING FOR MOBILE ADDRESS BARS */
     }
-    
-    .close-icon { 
-        top: 15px; right: 15px; 
-        width: 40px; height: 40px; font-size: 1.5rem; 
-    }
-
-    .screen-wrapper { 
-        margin-bottom: 30px; 
-        border: none; 
-        box-shadow: none;
-    }
-
-    .section-header { font-size: 1.6rem; }
-    .gold-divider { margin: 15px auto 30px auto; width: 60px; }
-
-    .narrative-text { font-size: 1rem; line-height: 1.6; }
-
-    /* Animation Tweaks */
-    .typewriter-wrapper { 
-        white-space: normal; border: none; width: 100%; text-align: center;
-    }
-    .type-me { 
-        white-space: normal; border-right: none; 
-        animation: none; /* Disable type animation on small screens to prevent breaking */
-        width: auto; opacity: 1; color: var(--gold);
-        font-family: 'Cinzel', serif; font-size: 1.1rem;
-    }
-
-    .quote-box { padding: 25px 20px; margin: 30px 0; }
-    .quote-main { font-size: 1.4rem; }
-
-    /* Ticket Transformation (Vertical Boarding Pass) */
-    .golden-ticket { 
-        flex-direction: column; 
-        height: auto; 
-        transform: scale(1); /* No tilt */
-        width: 100%;
-        max-width: 350px;
-    }
-    
-    .left-stub { 
-        border-right: none; 
-        border-bottom: 2px dashed #999; 
-        padding: 30px 20px;
-        text-align: center;
-        flex: auto;
-    }
-    
-    .right-stub { 
-        padding: 30px; 
-        flex: auto;
-    }
-    
-    .ticket-header { font-size: 2.5rem; }
+    .close-icon { top: 15px; right: 15px; width: 40px; height: 40px; font-size: 1.5rem; }
+    .golden-ticket { flex-direction: column; height: auto; transform: scale(1); width: 100%; max-width: 350px; }
+    .left-stub { border-right: none; border-bottom: 2px dashed #999; padding: 30px 20px; text-align: center; }
 }
 
-/* =========================================
-   📱 SMALL MOBILE (Max Width 380px)
-   ========================================= */
 @media (max-width: 380px) {
     .film-title { font-size: 3rem; }
-    .btn-play { width: 100%; justify-content: center; } /* Full width button */
-    .controls-row { flex-direction: column; align-items: stretch; }
-    .btn-icon { align-self: center; margin-top: 10px; }
+    .controls-row { flex-direction: column; }
+    .btn-icon { margin-top: 10px; }
 }
